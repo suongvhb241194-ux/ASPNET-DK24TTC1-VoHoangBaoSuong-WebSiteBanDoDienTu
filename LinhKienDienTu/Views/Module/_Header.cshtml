@@ -1,0 +1,247 @@
+﻿<style>
+    .nav-tabs {
+        margin-bottom: 15px;
+    }
+
+    .sign-with {
+        margin-top: 25px;
+        padding: 20px;
+    }
+
+    div#OR {
+        height: 30px;
+        width: 30px;
+        border: 1px solid #C2C2C2;
+        border-radius: 50%;
+        font-weight: bold;
+        line-height: 28px;
+        text-align: center;
+        font-size: 12px;
+        float: right;
+        position: absolute;
+        right: -16px;
+        top: 40%;
+        z-index: 1;
+        background: #DFDFDF;
+    }
+
+    .swal-modal {
+        width: 22rem !important;
+    }
+
+    .swal-title {
+        font-size: 15px !important;
+    }
+
+    .swal-confirm {
+        height: 2rem;
+    }
+
+    .swal-styled {
+        font-size: 12px !important;
+    }
+
+    .swal-icon {
+        font-size: 9px !important;
+    }
+
+    .Dangnhapbang {
+        margin-bottom: 10px;
+    }
+ 
+
+</style>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+@Html.Partial("_Nofit")
+<!-- HEADER-TOP START -->
+<div class="header-top">
+    <div class="container">
+        <div class="row">
+            <!-- HEADER-LEFT-MENU START -->
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="header-left-menu">
+                    <div class="welcome-info">
+                        Welcome <span>LinhKienDienTu</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="header-right-menu">
+                    <nav>
+                        @if (Session["User_Name"] == null)
+                        {
+                            <ul class="list-inline">
+                                <li><a href="#">Theo dõi ĐH</a></li>
+                                <li>
+                                    <a href="#" type="button" data-toggle="modal" data-target="#loginModal" data-backdrop="static" data-keyboard="false">Đăng nhập</a>
+                                </li>
+                                <li><a href="/lien-he">Quên mật khẩu</a></li>
+                                <li>
+                                    <a href="#" type="button" data-toggle="modal" data-target="#registerModal" data-backdrop="static" data-keyboard="false">Đăng ký</a>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="list-inline">
+                                <li><a href="/account/order">Đơn hàng</a></li>
+                                <li><a href="#">Xin chào <span style="color:orangered;">@Session["User_Name"]</span></a></li>
+                                <li><a href="~/account/userlogout?url=@(HttpContext.Current.Request.Url.AbsolutePath)">Đăng xuất</a></li>
+                            </ul>
+                        }
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="header-middle">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="logo">
+                    <a href="~/"><img src="~/Public/user/img/logo.png" alt="Chatluong" /></a>
+                </div>
+                <div class="header-right-callus">
+                    <h3>Hỗ trợ</h3>
+                    <span>0866879248</span>
+                </div>
+                @Html.Action("CategorySearch", "Module")
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal Đăng ký -->
+<div class="modal face" id="registerModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Đăng ký tài khoản</h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="form-horizontal">
+                    <!-- Form đăng ký -->
+                    <div class="form-group">
+                        <label for="FullName" class="col-sm-2 control-label">Họ và tên</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="FullName" name="FullName" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="Email" name="Email" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone" class="col-sm-2 control-label">Số điện thoại</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Phone" name="Phone" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Username" class="col-sm-2 control-label">Tên truy cập</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="Username" name="Name" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password" class="col-sm-2 control-label">Mật khẩu</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="Password" name="Password" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="RePassword" class="col-sm-2 control-label">Nhập lại mật khẩu</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="RePassword" name="RePassword" required />
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="btn_register">Đăng ký</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Đăng nhập -->
+<div class="modal" id="loginModal" tabindex="-1" role="dialog"  aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Đăng nhập</h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="Username" class="col-sm-2 control-label">Tên truy cập</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="LoginUsername" name="username" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password" class="col-sm-2 control-label">Mật khẩu</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="LoginPassword" name="password" required />
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="btn_login">Đăng nhập</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#btn_register').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "account/Register",
+            type: "POST",
+            data: {
+                user: {
+                    Email: $('#Email').val(),
+                    FullName: $('#FullName').val(),
+                    Name: $('#Username').val(),
+                    Password: $('#Password').val(),
+                    Phone: $('#Phone').val(),
+                }
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.Code == 0) {
+                    $('#registerModal').modal("hide");
+                    swal({ icon: "success", title: data.Message, timer: 5000 });
+                } else {
+                    swal({ icon: "warning", title: data.Message, timer: 5000 });
+                }
+            }
+        });
+    });
+
+    $('#btn_login').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "account/UserLogin",
+            type: "POST",
+            data: {
+                User: $('#LoginUsername').val(),
+                Password: $('#LoginPassword').val()
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.s === 0) {
+                    window.location.reload();
+                } else {
+                    swal({ icon: "warning", title: "Tài khoản hoặc mật khẩu không đúng", timer: 5000 });
+                }
+            }
+        });
+    });
+   
+</script>
